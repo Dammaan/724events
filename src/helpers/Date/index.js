@@ -13,4 +13,4 @@ export const MONTHS = {
   12: "décembre",
 };
 
-export const getMonth = (date) => MONTHS[date.getMonth()];
+export const getMonth = (date) => MONTHS[date.getMonth()+1]; // envoie index de 0 a 11 donc decalage de l'index à +1

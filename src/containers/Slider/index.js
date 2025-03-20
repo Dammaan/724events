@@ -12,7 +12,7 @@ const Slider = () => {
   );
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
+      () => setIndex(index < byDateDesc.length-1 ? index + 1 : 0), // Passage a length-1 avant length normal
       5000
     );
   };
@@ -46,6 +46,7 @@ const Slider = () => {
                   type="radio"
                   name="radio-button"
                   checked={idx === radioIdx}
+                  radioIdx={radioIdx}
                 />
               ))}
             </div>

@@ -30,7 +30,7 @@ const EventList = () => {
     setCurrentPage(1);
     setType(evtType);
   };
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
+  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1; // SUPRESSION DE +1 ? n'affiche pas d'élément suplementaires sur la deuxieme page
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
     <>
