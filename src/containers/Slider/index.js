@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useData } from "../../contexts/DataContext";
 import { getMonth } from "../../helpers/Date";
 
@@ -10,21 +10,25 @@ const Slider = () => {
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
     new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
   );
+
   const nextCard = () => {
-    setTimeout(
-      () => setIndex(index < byDateDesc.length-1 ? index + 1 : 0), // Passage a length-1 avant length normal
-      5000
-    );
+    if (!byDateDesc || byDateDesc.length === 0) return;
+    setTimeout(() => {
+      setIndex(index < byDateDesc.length - 1 ? index + 1 : 0);
+    }, 5000);
   };
+
   useEffect(() => {
     nextCard();
   });
+
+  if (!byDateDesc) return null;
+
   return (
     <div className="SlideCardList">
-      {byDateDesc?.map((event, idx) => (
-        <>
+      {byDateDesc.map((event, idx) => (
+        <React.Fragment key={event.id || event.title || idx}>
           <div
-            key={event.title}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
@@ -38,21 +42,24 @@ const Slider = () => {
               </div>
             </div>
           </div>
-          <div className="SlideCard__paginationContainer">
-            <div className="SlideCard__pagination">
-              {byDateDesc.map((_, radioIdx) => (
-                <input
-                  key={`${event.id}`}
-                  type="radio"
-                  name="radio-button"
-                  checked={idx === radioIdx}
-                  radioIdx={radioIdx}
-                />
-              ))}
-            </div>
-          </div>
-        </>
+        </React.Fragment>
       ))}
+
+      {/* Pagination en lecture seule, sans interaction */}
+      <div className="SlideCard__paginationContainer">
+        <div className="SlideCard__pagination">
+          {byDateDesc.map((_, radioIdx) => (
+            <input
+              // eslint-disable-next-line react/no-array-index-key
+              key={`radio-${radioIdx}`} // changement de la key
+              type="radio"
+              name="radio-button"
+              checked={index === radioIdx}
+              readOnly
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

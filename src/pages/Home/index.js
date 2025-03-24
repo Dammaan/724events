@@ -21,8 +21,6 @@ const Page = () => {
   // eslint-disable-next-line prefer-destructuring
   last = lastData.data.events[0]                                             
   }
-   
-console.log("last",last)
 
   return <>
     <header>
@@ -126,14 +124,16 @@ console.log("last",last)
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        <EventCard // LAST non defini
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
-      </div>
+        {last && last.cover && (
+    <EventCard 
+      imageSrc={last.cover}
+      title={last.title}
+      date={new Date(last.date)}
+      small
+      label="boom"
+    />
+  )}
+</div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
         <address>45 avenue de la République, 75000 Paris</address>
