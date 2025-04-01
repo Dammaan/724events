@@ -29,16 +29,34 @@ describe("When Form is created", () => {
 
 
 describe("When a page is created", () => {
-  it("a list of events is displayed", () => {
-    // to implement
-  })
-  it("a list a people is displayed", () => {
-    // to implement
-  })
+  beforeEach(() => {
+    render(<Home />);
+  });
+
+  it("a list of events is displayed", async () => {
+    const title = screen.getByTestId("event-section-title");
+    expect(title).toBeInTheDocument();
+
+  });
+
+  it("a list of people is displayed", async () => {
+    const person1 = screen.getByText("Samira");
+    const person2 = screen.getByText("Isabelle");
+    const person3 = screen.getByText("Jean-baptiste");
+    expect(person1).toBeInTheDocument();
+    expect(person2).toBeInTheDocument();
+    expect(person3).toBeInTheDocument();
+  });
+
   it("a footer is displayed", () => {
-    // to implement
-  })
-  it("an event card, with the last event, is displayed", () => {
-    // to implement
-  })
+    const footer = screen.getByRole("contentinfo");
+    expect(footer).toBeInTheDocument();
+    expect(footer).toHaveTextContent("Notre derniére prestation");
+    expect(footer).toHaveTextContent("Contactez-nous");
+  });
+
+  it("an event card, with the last event, is displayed", async () => {
+    const lastEventTitle = await screen.findByText(/notre derniére prestation/i);
+    expect(lastEventTitle).toBeInTheDocument();
+  });
 });
